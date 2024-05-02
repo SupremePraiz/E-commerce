@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "tallent_app",
+    "user_app",
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',

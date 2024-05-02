@@ -9,6 +9,9 @@ class Contractor(models.Model):
     phone_number = models.CharField(max_length=15, validators=[RegexValidator(r'^\+?1?\d{9,15}$')])  # Example regex for phone number validation
     date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"{self.user},{self.image}"
 
 class Employer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -17,15 +20,27 @@ class Employer(models.Model):
     phone_number = models.CharField(max_length=15, validators=[RegexValidator(r'^\+?1?\d{9,15}$')])  # Example regex for phone number validation
     date = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"{self.user},{self.image}"
 
 
 class JobPost(models.Model):
-    post = models.TextField(max_length=500)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.TextField(max_length=500)
+    date = models.DateField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"{self.user},{self.post}"
    
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     jobpost = models.ForeignKey(JobPost, on_delete=models.CASCADE, related_name='comments')
-    review = models.TextField(max_length=500)  # Adjust max_length as needed
+    comment = models.TextField(max_length=500)  # Adjust max_length as needed
     rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    
+    def __str__(self):
+        return f"{self.user},{self.comment}"
+    
