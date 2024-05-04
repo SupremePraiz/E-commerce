@@ -34,7 +34,7 @@ class EmployerDetail(generics.RetrieveUpdateDestroyAPIView):
 class JobPostList(generics.ListCreateAPIView):
     queryset = JobPost.objects.all()
     serializer_class = JobPostSerializer
-    # permission_classes =[IsAuthenticated]
+    permission_classes =[IsAuthenticated]
     
 class JobpostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = JobPost.objects.all()
@@ -45,7 +45,7 @@ class JobpostDetail(generics.RetrieveUpdateDestroyAPIView):
 '''comment Api'''
 class CommentList(generics.ListAPIView):
     serializer_class = CommentSerializer
-    # permission_classes =[IsAuthenticated]
+    permission_classes =[IsAuthenticated]
     
     def get_queryset(self):
         pk = self.kwargs['pk']
@@ -55,7 +55,7 @@ class CommentList(generics.ListAPIView):
 class CommentCreate(generics.CreateAPIView):
     
     serializer_class = CommentSerializer
-    # permission_classes =[IsAuthenticated]
+    permission_classes =[IsAuthenticated]
     
     def perform_create(self, serializer):
         pk = self.kwargs['pk']
@@ -63,11 +63,9 @@ class CommentCreate(generics.CreateAPIView):
         serializer.save(jobpost=jobpost, user=self.request.user)
 
     
-
-    
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes =[IsAdminOrReadOnly]
+    permission_classes =[IsOwnerOrReadOnly,IsAdminOrReadOnly]
     
     
